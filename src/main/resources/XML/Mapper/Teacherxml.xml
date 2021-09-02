@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.TeacherMapper">
+    <select id="findByTname" resultType="Bean.Teacher">
+        select * from teacher
+        where tname=#{tname}
+    </select>
+    <select id="login" resultType="Bean.Teacher">
+        select * from teacher where tno =#{id}
+    </select>
+    <resultMap id="my" type="Bean.Teacher">
+
+    </resultMap>
+    <select id="selectByCondition" resultMap="my">
+        select * from teacher 1=1
+        <where>
+        <if test="tname">and tname=#{tname}</if>
+        <if test="tid">and tid=#{tid}</if>
+        <if test="phone">and phone=#{phone}</if>
+        <if test="tpw">and tpw=#{tpw}</if>
+        <if test="organization">and organization=#{organization}</if>
+        </where>
+    </select>
+    <delete id="delete">
+        delete * from teacher where tno=#{tno}
+    </delete>
+    <insert id="add" useGeneratedKeys="true" keyProperty="tno">
+        insert into teacher(tname,tid,phone,tpw,organization)
+        value(#{tname},#{tid},#{phone},#{tpw},#{organization})
+    </insert>
+    <update id="update" >
+        update teacher
+        <set>
+        <if test="tname">tname=#{tname},</if>
+        <if test="tid">tid=#{tid},</if>
+        <if test="phone">phone=#{phone},</if>
+        <if test="tpw">tpw=#{tpw},</if>
+        <if test="organization">organization=#{organization},</if>
+        </set>
+        where tno=#{tno}
+    </update>
+</mapper>

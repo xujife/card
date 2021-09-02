@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.Student_information">
+    <select id="FindByDate" resultType="Bean.Student_information">
+        select * from Student_information
+        where date=#{date}
+        order by sno
+    </select>
+    <select id="FindBySno" resultType="Bean.Student_information">
+        select * from Student_information
+        where sno=#{sno}
+        order by date desc
+    </select>
+    <resultMap id="all" type="Bean.Student_information">
+        <id property="sno" column="sno"/>
+        <id property="date" column="date"/>
+        <result property="nowarea" column="nowarea"/>
+        <result property="submit" column="submit"/>
+        <result property="situationfour" column="situationfour"/>
+        <result property="situationthree" column="situationthree"/>
+        <result property="nowcountry" column="nowcountry"/>
+        <result property="train" column="train"/>
+        <result property="fever" column="fever"/>
+        <result property="vacationschool" column="vacationschool"/>
+        <result property="health" column="health"/>
+        <result property="nationality" column="nationality"/>
+        <result property="abroad" column="abroad"/>
+        <result property="location" column="location"/>
+        <result property="situationtwo" column="situationtwo"/>
+        <result property="situationone" column="situationone"/>
+        <result property="dayschool" column="dayschool"/>
+    </resultMap>
+    <select id="getAll" resultMap="all">
+        select * from Student_information
+    </select>
+    <select id="SelectByCondition" resultType="Bean.Student_information">
+        select * from Student_information
+        <where>
+           1=1
+           <if test="sno!=null">and sno=#{sno}</if>
+           <if test="date!=null">and date=#{date}</if>
+            <if test="nationality!=null">and nationality=#{nationality}</if>
+            <if test="abroad!=null">and abroad=#{abroad}</if>
+            <if test="dayschool!=null">and dayschool=#{dayschool}</if>
+            <if test="health!=null">and health=#{health}</if>
+            <if test="location!=null">and location=#{location}</if>
+            <if test="vacationschool!=null">and vacationschool=#{vacationschool}</if>
+        </where>
+    </select>
+    <select id="FindById" resultType="Bean.Student_information">
+        select * from Student_information
+        where sno=#{sno} and date=#{date}
+    </select>
+    <update id="update" >
+        update Student_information
+        <set>
+            <if test="nationality!=null"> nationality=#{nationality},</if>
+            <if test="abroad!=null">abroad=#{abroad},</if>
+            <if test="dayschool!=null">dayschool=#{dayschool},</if>
+            <if test="health!=null">health=#{health},</if>
+            <if test="location!=null">location=#{location},</if>
+            <if test="situationone!=null">situationone=#{situationone},</if>
+            <if test="situationtwo!=null">situationtwo=#{situationtwo},</if>
+            <if test="nowcountry!=null">nowcountry=#{nowcountry},</if>
+            <if test="nowarea!=null">nowarea=#{nowarea},</if>
+            <if test="situationthree!=null">situationthree=#{situationthree},</if>
+            <if test="situationfour!=null">situationfour=#{situationfour},</if>
+            <if test="fever!=null">fever=#{fever},</if>
+            <if test="train!=null">train=#{train},</if>
+            <if test="vacationschool!=null">vacationschool=#{vacationschool},</if>
+        </set>
+        where sno=#{sno} and date=#{date}
+    </update>
+    <update id="submit">
+        update Student_information
+        set submit="是"
+        where date=#{date}
+    </update>
+    <insert id="add" keyProperty="date sno">
+        insert into Student_information(date,sno,nationality,abroad,dayschool,health,
+        vacationschool,location, fever,train,situationone,situationtwo,situationthree,situationfour,
+        nowcountry,nowarea)values(#{date},#{sno},#{nationality},#{abroad},#{dayschool},#{health},
+        #{vacationschool},#{location},#{fever},#{train},#{situationone},#{situationtwo},#{situationthree},#{situationfour},
+        #{nowcountry},#{nowarea})
+    </insert>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.PermissionMapper">
+    <insert id="add">
+        insert into permission(id,sno)
+        values(#{id},#{sno})
+    </insert>
+
+    <update id="update">
+        update permission
+        <set>
+            <if test="sno">sno=#{sno}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from permission
+        where id=#{id};
+    </delete>
+
+    <select id="all" resultType="Bean.Permission">
+        select * from permission
+    </select>
+
+    <select id="FindBySno" resultType="Bean.Permission">
+        select * from permission where sno=#{sno}
+    </select>
+    
+</mapper>

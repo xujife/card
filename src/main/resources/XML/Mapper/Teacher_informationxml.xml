@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.Teacher_informationMapper">
+    <select id="findbytoday" resultType="Bean.Teacher_information">
+         select * from teacher_information
+        where date=#{date}
+        order by tno
+    </select>
+    <select id="findbyTno" resultType="Bean.Teacher_information">
+        select * from teacher_information
+        where tno=#{tno}
+        order by date desc
+    </select>
+    <select id="all" resultType="Bean.Teacher_information">
+        select * from teacher_information
+    </select>
+
+    <select id="FindBySnoDate" resultType="Bean.Teacher_information">
+        select * from teacher_information where
+        tno=#{tno} and date=#{date}
+    </select>
+
+    <delete id="delete">
+        delete from teacher_information where
+        tno=#{tno} and date=#{date}
+    </delete>
+
+    <insert id="add">
+        insert into teacher_information(date,tno,identity,vacationschool,atschool,nowcountry,
+        nowarea,fever,health,abroad,situationone,situationtwo,situationthree,situationfour)
+        values(#{date},#{tno},#{identity},#{vacationschool},#{atschool},#{nowcountry},
+        #{nowarea},#{fever},#{health},#{abroad},#{situationone},#{situationtwo},
+        #{situationthree},#{situationfour})
+    </insert>
+    <update id="update">
+        update teacher_information
+        <set>
+            <if test="identity">identity=#{identity},</if>
+            <if test="vacationschool">vacationschool=#{vacationschool},</if>
+            <if test="atschool">atschool=#{atschool},</if>
+            <if test="nowcountry">nowcountry=#{nowcountry},</if>
+            <if test="nowarea">nowarea=#{nowarea},</if>
+            <if test="fever">fever=#{fever},</if>
+            <if test="health">health=#{health},</if>
+            <if test="abroad">abroad=#{abroad},</if>
+            <if test="situationone">situationone=#{situationone},</if>
+            <if test="situationtwo">situationtwo=#{situationtwo},</if>
+            <if test="situationthree">situationthree=#{situationthree},</if>
+            <if test="situationfour">situationfour=#{situationfour},</if>
+        </set>
+        where date=#{date} and tno=#{tno}
+    </update>
+</mapper>

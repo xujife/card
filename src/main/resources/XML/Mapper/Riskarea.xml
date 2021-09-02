@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.RiskareaMapper">
+    <insert id="add">
+        insert into riskarea(areaname,num)
+        values(#{areaname},#{num})
+    </insert>
+    <delete id="delete">
+        delete from riskarea where
+        areaname=#{areaname}
+    </delete>
+
+    <update id="update" >
+        update riskarea
+        <set>
+            <if test="num">num=#{num}</if>
+        </set>
+        where areaname=#{areaname}
+    </update>
+
+    <select id="all" resultType="Bean.Riskarea">
+        select * from riskarea
+    </select>
+
+    <select id="FindByName" resultType="Bean.Riskarea">
+        select * from riskarea where areaname=#{areaname}
+    </select>
+</mapper>

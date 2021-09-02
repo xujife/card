@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.AdminMapper">
+    <select id="login" resultType="Bean.Admin">
+        select * from admin where  admin= #{admin}
+    </select>
+    <resultMap id="my" type="Bean.Admin">
+
+    </resultMap>
+    <select id="selectByCondition" resultMap="my" parameterType="string">
+        select * from admin 1=1
+        <where>
+            <if test="admin">and admin=#{admin}</if>
+            <if test="password">and password=#{password}</if>
+        </where>
+    </select>
+    <delete id="delete">
+        delete * from admin where
+        admin=#{admin}
+    </delete>
+    <insert id="add">
+        insert into admin(admin,password)
+        value(#{admin},#{password})
+    </insert>
+    <update id="update">
+        update admin
+        <set>
+            <if test="admin!=null">admin=#{admin},</if>
+            <if test="password!=null">password=#{password}</if>
+        </set>
+        where admin=#{admin}
+    </update>
+</mapper>

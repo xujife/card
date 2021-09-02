@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="Controller" use-default-filters="true">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+</context:component-scan>
+    <context:component-scan base-package="Services" use-default-filters="true"/>
+    <!--引入外部文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--配置数据源-->
+    <bean id="DB" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+    </bean>
+    <!--Sqlsessionfactory-->
+    <bean id="SqlsessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:XML/Global.xml"/>
+        <property name="dataSource" ref="DB"/>
+        <property name="mapperLocations" value="classpath:XML/Mapper/*.xml"/>
+    </bean>
+    <!--实现所有接口加入ioc容器中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="Mapper"/>
+    </bean>
+    <!--配置可以批量操作的sqlsession-->
+    <bean id="Sqlsession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="SqlsessionFactory"/>
+        <constructor-arg name="executorType" value="BATCH"/>
+    </bean>
+    <!--配置事务-->
+    <bean id="transaction" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="DB"/>
+    </bean>
+</beans>
